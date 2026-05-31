@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+     width="800"
+     height="450"
+     viewBox="0 0 800 450">
+
+    <!-- Background -->
+    <rect width="800"
+          height="450"
+          fill="#111827"/>
+
+    <!-- Border -->
+    <rect x="10"
+          y="10"
+          width="780"
+          height="430"
+          rx="20"
+          ry="20"
+          fill="none"
+          stroke="#22c55e"
+          stroke-width="4"/>
+
+    <!-- Camera Icon -->
+    <circle cx="400"
+            cy="170"
+            r="45"
+            fill="#22c55e"/>
+
+    <rect x="340"
+          y="220"
+          width="120"
+          height="70"
+          rx="10"
+          fill="#1e293b"
+          stroke="#22c55e"
+          stroke-width="3"/>
+
+    <circle cx="400"
+            cy="255"
+            r="20"
+            fill="#22c55e"/>
+
+    <!-- Text -->
+    <text x="50%"
+          y="340"
+          dominant-baseline="middle"
+          text-anchor="middle"
+          fill="#ffffff"
+          font-size="34"
+          font-family="Arial">
+
+        Waiting for Traffic Feed...
+
+    </text>
+
+    <text x="50%"
+          y="390"
+          dominant-baseline="middle"
+          text-anchor="middle"
+          fill="#94a3b8"
+          font-size="20"
+          font-family="Arial">
+
+        Smart Traffic AI System
+
+    </text>
+
+</svg>

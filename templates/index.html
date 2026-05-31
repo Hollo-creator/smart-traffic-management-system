@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Smart Traffic AI — Dashboard</title>
+  <link rel="stylesheet" href="/static/css/style.css"/>
+  <!-- Chart.js for analytics -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <!-- Socket.IO -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.min.js"></script>
+</head>
+<body>
+
+<!-- ── Header ───────────────────────────────────────────── -->
+<header class="header">
+  <div class="header-left">
+    <span class="logo-dot"></span>
+    <h1>Smart Traffic AI</h1>
+  </div>
+  <div class="header-right">
+    <span id="clock" class="clock">--:--:--</span>
+    <button id="btnStart" class="btn btn-green" onclick="startSystem()">▶ Start</button>
+    <button id="btnStop"  class="btn btn-red"   onclick="stopSystem()">■ Stop</button>
+  </div>
+</header>
+
+<!-- ── Stats bar ─────────────────────────────────────────── -->
+<section class="stats-bar">
+  <div class="stat-card" id="stat-total">
+    <div class="stat-num" id="total-vehicles">0</div>
+    <div class="stat-lbl">Total vehicles</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-num" id="busiest-dir">—</div>
+    <div class="stat-lbl">Busiest lane</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-num" id="active-green">—</div>
+    <div class="stat-lbl">Active green</div>
+  </div>
+  <div class="stat-card" id="emergency-banner" style="display:none">
+    <div class="stat-num emergency-text">🚨 Emergency</div>
+    <div class="stat-lbl" id="emergency-dir">—</div>
+  </div>
+</section>
+
+<!-- ── Camera grid ───────────────────────────────────────── -->
+<section class="camera-grid">
+  {% for dir in ["North","East","South","West"] %}
+  <div class="camera-card" id="card-{{ dir | lower }}">
+    <div class="camera-header">
+      <span class="dir-label">{{ dir }}</span>
+      <span class="signal-pill" id="pill-{{ dir | lower }}">RED</span>
+    </div>
+    <div class="camera-body">
+      <img id="frame-{{ dir | lower }}" class="camera-frame"
+           src="/static/img/placeholder.svg" alt="{{ dir }} feed"/>
+      <div class="camera-overlay">
+        <span id="count-{{ dir | lower }}">Vehicles: 0</span>
+        <span id="timer-{{ dir | lower }}">Green: 0s</span>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</section>
+
+<!-- ── Analytics ─────────────────────────────────────────── -->
+<section class="analytics-section">
+  <div class="chart-card">
+    <h3>Vehicle count — live</h3>
+    <canvas id="liveChart" height="120"></canvas>
+  </div>
+  <div class="chart-card">
+    <h3>Hourly average by direction</h3>
+    <canvas id="hourlyChart" height="120"></canvas>
+  </div>
+</section>
+
+<!-- ── Log table ─────────────────────────────────────────── -->
+<section class="log-section">
+  <h3>Recent events</h3>
+  <div class="table-wrap">
+    <table id="logTable">
+      <thead>
+        <tr>
+          <th>Time</th><th>Direction</th>
+          <th>Vehicles</th><th>Green (s)</th><th>Emergency</th>
+        </tr>
+      </thead>
+      <tbody id="logBody"></tbody>
+    </table>
+  </div>
+</section>
+
+<script src="/static/js/dashboard.js"></script>
+</body>
+</html>
